@@ -4,9 +4,10 @@ import cors from 'cors'
 import { corsConfig } from './config/cors.ts';
 
 const app = express();
+
+app.use(cors(corsConfig))
 app.use(express.json()); //permite el uso de los json
 app.use(express.urlencoded({extended: true})) //parseado de data 
-app.use(cors(corsConfig))
  
 app.get('/', (req, res)=> {
     res.json({
