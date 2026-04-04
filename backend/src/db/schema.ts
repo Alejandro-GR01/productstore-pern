@@ -49,13 +49,13 @@ export const usersRlations = relations(users, ({ many }) => ({
 // references = primary key en la tabla relacinada (users.id)
 export const productsRelations = relations(products, ({ one, many }) => ({
     comments: many(comments),
-    users: one(users, { fields: [products.userID], references: [users.id] })
+    user: one(users, { fields: [products.userID], references: [users.id] })
 }))
 
 
 export const commentsRelations = relations(comments, ({ one }) => ({
-    users: one(users, { fields: [comments.userID], references: [users.id] }),
-    products: one(products, { fields: [comments.productID], references: [products.id] })
+    user: one(users, { fields: [comments.userID], references: [users.id] }),
+    product: one(products, { fields: [comments.productID], references: [products.id] })
 }))
 
 
