@@ -1,2 +1,2 @@
-export * from './auth.ts'
-export * from './user.ts'
+export * from './authController.ts'
+export * from './userController.ts'
