@@ -1,0 +1,49 @@
+import type { Request, Response } from "express";
+import { createUser, getUserByEmail } from "../db/queries.ts";
+import { checkPassword, hashPassword } from "../utils/auth.ts";
+import { type NewUser } from "../db/schema.ts";
+
+import { v4 as uuidv4 } from "uuid";
+import { generateJWT } from "../utils/jwt.ts";
+
+export async function registerUser(req: Request, res: Response) {
+  const body = req.body;
+
+  try {
+    const existUser = await getUserByEmail(body.email);
+    if (existUser) {
+      return res.status(400).json({ error: `The email must be unique!` }).end();
+    } 
+      const id = uuidv4();
+      const passwordHash = await hashPassword(body.password);
+      const data: NewUser = {
+        ...req.body,
+        passwordHash,
+        id,
+      };
+      const {passwordHash : password , ...user} = await createUser(data);
+      const token = generateJWT({ id: user.id });
+      return res.status(200).json({ user, token });
+    
+  } catch (err) {
+    console.log(err, "errores");
+    const error = JSON.stringify(err) || new Error("Internal Server Error");
+    console.log(error);
+    res.status(500).json({ error: error });
+  }
+}
+
+export async function loginUser(req: Request, res: Response) {
+  const { email, password } = req.body;
+
+  const userEmail = await getUserByEmail(email);
+  if(!userEmail){
+    return res.status(404).json({error: "User not found"})
+  }
+  const isPasword = await checkPassword(password, userEmail.passwordHash)
+  if(!isPasword){
+    return res.status(401).json({error: 'The provided password does not match this user'})
+  }
+  const token = generateJWT({id:userEmail.id})
+  res.send(token)
+  }

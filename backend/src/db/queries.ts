@@ -1,3 +1,4 @@
+
 import { db } from "./index.ts";
 import { eq } from "drizzle-orm";
 import {
@@ -7,18 +8,32 @@ import {
     type NewComent,
     type NewProduct,
     type NewUser,
+    type User,
 } from "./schema.ts";
+
+
+type UserOut = Omit<User, 'passwordHash'>
+
 
 // USER QUERIES
 
 export const createUser = async (data: NewUser) => {
     const [user] = await db.insert(users).values(data).returning();
+
     return user;
 };
 
 export const getUserById = async (id: string) => {
-    return db.query.users.findFirst({ where: eq(users.id, id) });
+    const user = await db.select().from(users).limit(1).where(eq(users.id, id))
+   
+    return user;
 };
+
+export const getUserByEmail = async (email: string) => {
+     const user: User= await db.query.users.findFirst({ where: eq(users.email, email) })
+   
+    return user
+}
 
 export const updateUser = async (id: string, data: Partial<NewUser>) => {
     const existingUser = await getUserById(id);
@@ -58,7 +73,7 @@ export const getAllProducts = async () => {
     });
 };
 
-export const getProductById = async (id: string) => {
+export const getProductById = async (id: number) => {
     return db.query.products.findFirst({
         where: eq(products.id, id),
         with: {
@@ -81,7 +96,7 @@ export const getProductsByUserId = async (userId: string) => {
     })
 }
 
-export const updateProduct = async (id: string, data: Partial<NewProduct>) => {
+export const updateProduct = async (id: number, data: Partial<NewProduct>) => {
     const existingProduct = await getProductById(id);
     if (!existingProduct) {
         throw new Error(`Product with id ${id} not found`)
@@ -94,8 +109,8 @@ export const updateProduct = async (id: string, data: Partial<NewProduct>) => {
     return product;
 };
 
-export const deleteProduct = async (id: string) => {
-     const existingProduct = await getProductById(id);
+export const deleteProduct = async (id: number) => {
+    const existingProduct = await getProductById(id);
     if (!existingProduct) {
         throw new Error(`Product with id ${id} not found`)
     }
@@ -119,7 +134,7 @@ export const getCommentById = async (id: string) => {
 }
 
 export const deleteComment = async (id: string) => {
-     const existingComment = await getCommentById(id);
+    const existingComment = await getCommentById(id);
     if (!existingComment) {
         throw new Error(`Comment with id ${id} not found`)
     }

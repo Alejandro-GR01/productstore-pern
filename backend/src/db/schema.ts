@@ -1,32 +1,36 @@
 
-import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
+
+import { boolean, index, pgTable, serial, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { relations, Table } from "drizzle-orm";
 
 export const users = pgTable("users", {
-    id: text("id").primaryKey(),
+    id: uuid('id').primaryKey(),
     email: text("email").notNull().unique(),
-    name: text("name"),
+    name: text("name").notNull(),
+    passwordHash: text("password_hash").notNull(),
+    role: varchar('role', { length: 50 }).default('user').notNull(),
+    isActive: boolean('is_active').default(true).notNull(),
     imageUrl: text("image_url"),
     createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow().$onUpdate(()=>new Date()),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow().$onUpdate(() => new Date()),
 });
 
 export const products = pgTable("products", {
-    id: uuid("id").defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     title: text("title").notNull(),
     description: text("description").notNull(),
     imageUrl: text("image_url").notNull(),
-    userID: text("user_id")
+    userID: uuid("user_id")
         .notNull()
         .references(() => users.id, { onDelete: "cascade" }),
     createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow().$onUpdate(()=>new Date()),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow().$onUpdate(() => new Date()),
 });
 
 export const comments = pgTable("comments", {
     id: uuid("id").defaultRandom().primaryKey(),
     content: text("content").notNull(),
-    userID: text("user_id")
+    userID: uuid("user_id")
         .notNull()
         .references(() => users.id, { onDelete: "cascade" }),
     productID: uuid("product_id")
@@ -61,6 +65,8 @@ export const commentsRelations = relations(comments, ({ one }) => ({
 
 // type inference
 export type User = typeof users.$inferSelect
+
+
 export type NewUser = typeof users.$inferInsert
 
 export type Product = typeof products.$inferSelect

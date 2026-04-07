@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon  src/index.ts",
+    "dev:api": "nodemon src/index.ts --api",
     "build": "tsc",
     "db:push": "drizzle-kit push"
   },
@@ -15,15 +16,22 @@
   "packageManager": "pnpm@10.28.0",
   "dependencies": {
     "@clerk/express": "^2.0.7",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
-    "pg": "^8.20.0"
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.20.0",
+    "slug": "^11.0.1",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/pg": "^8.20.0",
     "drizzle-kit": "^0.31.10",
     "nodemon": "^3.1.14",
