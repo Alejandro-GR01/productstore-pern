@@ -5,6 +5,6 @@ import { getUser } from "../controllers/index.ts";
 
 const route: Router = Router();
 
-route.post('/', getUser  )
+route.get('/my', getUser  )
 
 export default route
