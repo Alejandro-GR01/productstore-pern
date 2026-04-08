@@ -5,8 +5,8 @@ import { corsConfig } from './config/cors.ts';
 
 import userRoutes from './routes/userRoutes.ts';
 import authRoutes from './routes/authRoutes.ts';
-// import productRoutes from './routes/productRoutes.ts'
-// import commentRoutes from './routes/commentRoutes.ts'
+import productRoutes from './routes/productRoutes.ts'
+import commentRoutes from './routes/commentRoutes.ts'
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.get('/', (req, res)=> {
 app.use('/auth', authRoutes)
 
 app.use('/api/users', userRoutes)
-// app.use('api/products', productRoutes)
-// app.use('api/comments', commentRoutes)
+app.use('/api/products', productRoutes)
+app.use('/api/comments', commentRoutes)
 
  app.listen(ENV.PORT, ()=> console.log(`Sever running on PORT:${ENV.PORT}`))

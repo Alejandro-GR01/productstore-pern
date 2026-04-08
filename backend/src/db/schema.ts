@@ -16,7 +16,7 @@ export const users = pgTable("users", {
 });
 
 export const products = pgTable("products", {
-    id: serial('id').primaryKey(),
+    id: uuid('id').primaryKey(),
     title: text("title").notNull(),
     description: text("description").notNull(),
     imageUrl: text("image_url").notNull(),
@@ -65,8 +65,6 @@ export const commentsRelations = relations(comments, ({ one }) => ({
 
 // type inference
 export type User = typeof users.$inferSelect
-
-
 export type NewUser = typeof users.$inferInsert
 
 export type Product = typeof products.$inferSelect

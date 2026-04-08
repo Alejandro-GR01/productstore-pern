@@ -10,7 +10,7 @@ export const corsConfig: CorsOptions = {
             console.log("Origin undefined accepted on development!")
             const haveUndefined = whiteList.includes(undefined)
             if(!haveUndefined) whiteList.push(undefined);
-            console.log(whiteList)
+
         }
 
         if (whiteList.includes(origin)) {
