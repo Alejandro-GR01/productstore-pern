@@ -83,7 +83,7 @@ export async function updateProductById(req: Request, res: Response) {
     if (!exisitingProduct)
       return res.status(404).json({ error: "Product not found" });
     if (exisitingProduct.userID !== userID)
-      res.status(403).json({ error: "You can only update your own products" });
+      return res.status(403).json({ error: "You can only update your own products" });
 
     const product = await queries.updateProduct(id, {
       title,
@@ -108,7 +108,7 @@ export async function deleteProductById(req: Request, res: Response) {
     if (!exisitingProduct)
       return res.status(404).json({ error: "Product not found" });
     if (exisitingProduct.userID !== userID)
-      res.status(403).json({ error: "You can only update your own products" });
+      return res.status(403).json({ error: "You can only update your own products" });
 
     await queries.deleteProduct(id);
     return res.status(200).json({ message: "Product deleted succesfully" });

@@ -36,18 +36,18 @@ export async function loginUser(req: Request, res: Response) {
 
     const userEmail = await getUserByEmail(email);
     if (!userEmail) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
     const isPasword = await checkPassword(password, userEmail.passwordHash);
     if (!isPasword) {
       return res
         .status(401)
-        .json({ error: "The provided password does not match this user" });
+        .json({ error: "Invalid credentials" });
     }
     const token = generateJWT({ id: userEmail.id });
     res.send(token);
   } catch (error) {
     console.log("Error login user", error);
-    res.status(500).json({ error: "Error ligin user" });
+    res.status(500).json({ error: "Error logging in user" });
   }
 }
