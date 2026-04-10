@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUser } from "../controllers/index.ts";
+import { getUser } from "../controllers/userController.ts";
 
 
 

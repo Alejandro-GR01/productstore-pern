@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginUser, registerUser } from "../controllers/index.ts";
+import { loginUser, registerUser } from "../controllers/authController.ts";
 import { body } from "express-validator";
 import { handleInputErrors } from "../middleware/validation.ts";
 
