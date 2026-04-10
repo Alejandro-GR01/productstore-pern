@@ -6,7 +6,7 @@ import { isAxiosError } from "axios";
 import api from "../config/axios";
 import ErrorMessage from "../components/ErrorMessage";
 
-const RegisterView = () => {
+const RegisterView = ({refetch}) => {
   const navigate = useNavigate();
   const initialvalues = {
     name: "",
@@ -31,6 +31,7 @@ const RegisterView = () => {
       localStorage.setItem("AUTH_TOKEN", data);
       toast.success("User created");
       reset();
+      refetch();
       setTimeout(() => {
         navigate("/");
       }, 1000);

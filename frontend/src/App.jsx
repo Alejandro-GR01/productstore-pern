@@ -10,14 +10,17 @@ import RegisterView from "./views/RegisterView";
 import { Toaster } from "sonner";
 import { useEffect } from "react";
 import { useAppStore } from "./store/store";
-// import {useQuery} from '@tanstack/react-query'
+import useUserSinc from "./hooks/useUserSinc";
 
 const App = () => {
   const { theme } = useAppStore();
-  useEffect(() => { 
+  const {refetch} = useUserSinc();
+  useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+
   return (
     <>
       <Routes>
@@ -28,8 +31,11 @@ const App = () => {
           <Route path="/create" element={<CreateProductView />} />
           <Route path="/edit/:id" element={<EditProductView />} />
         </Route>
-        <Route path="/auth/login" element={<LoginView />} />
-        <Route path="/auth/register" element={<RegisterView />} />
+        <Route path="/auth/login" element={<LoginView refetch={refetch} />} />
+        <Route
+          path="/auth/register"
+          element={<RegisterView refetch={refetch} />}
+        />
       </Routes>
       <Toaster position="top-right" />
     </>

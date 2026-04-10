@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router";
 import Logo from "../components/Logo";
 import ErrorMessage from "../components/ErrorMessage";
 
-const LoginView = () => {
+const LoginView = ({refetch}) => {
   const navigate = useNavigate()
   const initialValues = {
     email: "",
@@ -25,11 +25,14 @@ const LoginView = () => {
     try {
       const { data } = await api.post("/auth/login", formData);
       localStorage.setItem("AUTH_TOKEN", data);
+      console.log(data)
       toast.success("User authenticated");
+      refetch()
       reset();
        setTimeout(() => {
         navigate("/");
       }, 1000);
+     
     } catch (error) {
       if (isAxiosError(error) && error.response) {
         toast.error(error.response.data.error);
@@ -59,7 +62,7 @@ const LoginView = () => {
                 Email
               </label>
               <input
-                type="email"
+                type="text"
                 id="email"
                 name="email"
                 placeholder="juanperez@correo.com"
