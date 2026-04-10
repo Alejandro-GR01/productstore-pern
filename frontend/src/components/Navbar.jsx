@@ -1,18 +1,14 @@
 import { Link } from "react-router";
 import { PlusIcon, ShoppingBagIcon, UserIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
+import Logo from "./Logo";
 const Navbar = () => {
   return (
     <div className="navbar bg-base-300">
       <div className="max-w-5xl mx-auto w-full px-4 flex justify-between items-center ">
         {/* Logo left */}
         <div className="flex-1">
-          <Link to="/" className="btn btn-ghost gap-2">
-            <ShoppingBagIcon className="size-6 text-primary" />
-            <p className="text-lg font-bold tracking-wider">
-              Product<span className=" font-light">Store</span>
-            </p>
-          </Link>
+          <Logo />
         </div>
 
         <div className="flex gap-2 items-center ">
@@ -27,10 +23,10 @@ const Navbar = () => {
                 </Link>
             </>
             <>
-              <button className="btn btn-ghost btn-sm">
+              <Link to={'/auth/login'} className="btn btn-ghost btn-sm">
                 Sig In
-              </button>
-              <button className="btn btn-primary btn-sm">Get Started</button>
+              </Link>
+              <Link to={'/auth/register'} className="btn btn-primary btn-sm">Get Started</Link>
             </>
             <ThemeSelector />
         </div>

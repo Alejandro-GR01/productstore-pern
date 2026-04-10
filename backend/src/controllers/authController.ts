@@ -23,7 +23,7 @@ export async function registerUser(req: Request, res: Response) {
     };
     const { passwordHash: password, ...user } = await createUser(data);
     const token = generateJWT({ id: user.id });
-    return res.status(200).json({ user, token });
+    return res.status(201).send(token);
   } catch (error) {
     console.log("Error registering user", error);
     res.status(500).json({ error: "Error registering user" });
