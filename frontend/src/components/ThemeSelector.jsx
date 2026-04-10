@@ -1,19 +1,16 @@
+import { useAppStore } from "../store/store";
 import { PaletteIcon } from "lucide-react";
-import { useEffect, useState } from "react";
 import { THEMES } from "../constants";
+import { useEffect } from "react";
 
 const ThemeSelector = () => {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("theme") || "forest";
-    }
-    return "forest";
-  });
+  const { theme, setTheme } = useAppStore();
 
-  useEffect(() => {
+
+    useEffect(() => { 
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-  }, [theme]);
+  }, [theme])
 
   return (
     <div className="dropdown dropdown-end">
@@ -32,13 +29,19 @@ const ThemeSelector = () => {
               onClick={() => setTheme(t)}
               className={`flex justify-between ${theme === t ? "bg-primary/30 text-primary-content" : ""}`}
             >
-              <span className={`capitalize text-xs ${theme === t && 'font-semibold'}`}>{t}</span>
-              <div className="flex gap-0.5 p-1 bg rounded-full bg-content/60" data-theme={t}>
+              <span
+                className={`capitalize text-xs ${theme === t && "font-semibold"}`}
+              >
+                {t}
+              </span>
+              <div
+                className="flex gap-0.5 p-1 bg rounded-full bg-content/60"
+                data-theme={t}
+              >
                 <span className="w-4 h-4 rounded-full bg-primary" />
                 <span className="w-4 h-4 rounded-full  bg-secondary" />
                 <span className="w-4 h-4 rounded-full  bg-accent" />
                 <span className="w-4 h-4 rounded-full  bg-neutral" />
-
               </div>
             </button>
           </li>
