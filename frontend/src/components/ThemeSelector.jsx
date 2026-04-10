@@ -1,16 +1,10 @@
 import { useAppStore } from "../store/store";
+
 import { PaletteIcon } from "lucide-react";
 import { THEMES } from "../constants";
-import { useEffect } from "react";
 
 const ThemeSelector = () => {
   const { theme, setTheme } = useAppStore();
-
-
-    useEffect(() => { 
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme])
 
   return (
     <div className="dropdown dropdown-end">
