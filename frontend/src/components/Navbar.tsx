@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { PlusIcon, UserIcon } from "lucide-react";
+import { PlusIcon, UserIcon, LogOutIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 import Logo from "./Logo";
 
@@ -7,6 +7,12 @@ import { useAppStore } from "../store/store";
 
 const Navbar = () => {
   const { user } = useAppStore();
+
+  const handleLogout = () => {
+    localStorage.removeItem("AUTH_TOKEN");
+    useAppStore.getState().reset();
+    window.location.href = "/";
+  };
 
   return (
     <div className="navbar bg-base-300">
@@ -26,6 +32,14 @@ const Navbar = () => {
                 <UserIcon className="size-4" />
                 <span className="hidden sm:inline">Profile</span>
               </Link>
+              <button
+                onClick={handleLogout}
+                className="btn btn-ghost btn-sm gap-1"
+                title="Logout"
+              >
+                <LogOutIcon className="size-4" />
+                <span className="hidden sm:inline">Logout</span>
+              </button>
             </>
           ) : (
             <>

@@ -3,9 +3,7 @@ import { ProductData } from "../types";
 
 // User API
 export const getUser = async () => {
-  console.log("Getting user data...");
   const { data } = await api.get("api/users/my");
-  console.log(data);
   return data;
 };
 

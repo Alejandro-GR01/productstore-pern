@@ -4,9 +4,14 @@ import { getUser } from "../api/api";
 import { useAppStore } from "../store/store";
 
 const useUserSinc = () => {
-  const { data, refetch } = useQuery({
+  const hasToken = typeof window !== "undefined" && !!localStorage.getItem("AUTH_TOKEN");
+
+  const { data, refetch, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: getUser,
+    enabled: hasToken, // Solo ejecuta si hay token
+    retry: 1,
+    staleTime: 1000 * 60 * 5, // 5 minutos - cache del usuario
     refetchOnWindowFocus: false,
   });
 
@@ -18,6 +23,7 @@ const useUserSinc = () => {
 
   return {
     refetch,
+    isLoading,
   };
 };
 

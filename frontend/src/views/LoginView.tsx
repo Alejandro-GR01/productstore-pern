@@ -34,7 +34,6 @@ const LoginView = ({ refetch }: LoginViewProps) => {
     try {
       const { data } = await api.post("/auth/login", formData);
       localStorage.setItem("AUTH_TOKEN", data);
-      console.log(data);
       toast.success("User authenticated");
       refetch();
       reset();
