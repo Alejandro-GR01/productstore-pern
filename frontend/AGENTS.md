@@ -81,3 +81,16 @@ pnpm build        # Compila TypeScript + Vite
 - TanStack Query (server state)
 - React Router 7
 - Axios
+
+---
+
+## 🛠️ Skills del Proyecto
+
+Skills específicas del proyecto (ubicadas en `.agents/skills/`):
+
+| Skill | Trigger | Descripción |
+|-------|---------|-------------|
+| **vercel-react-best-practices** | Código React | 40+ reglas de performance (waterfalls, bundle size, re-renders, server-side) |
+| **frontend-design** | Diseño UI/UX | Guías de diseño para componentes y layouts |
+
+> Estas skills se cargan automáticamente según el contexto del código.
