@@ -1,19 +1,16 @@
 import { Link } from "react-router";
-import { PlusIcon, ShoppingBagIcon, UserIcon } from "lucide-react";
+import { PlusIcon, UserIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 import Logo from "./Logo";
-
 
 import { useAppStore } from "../store/store";
 
 const Navbar = () => {
-  const {user} = useAppStore()
+  const { user } = useAppStore();
 
   return (
     <div className="navbar bg-base-300">
       <div className="max-w-5xl mx-auto w-full px-4 flex justify-between items-center ">
-        {/* Logo left */}
-
         <div className="flex-1">
           <Logo />
         </div>

@@ -7,9 +7,18 @@ import { Link, useNavigate } from "react-router";
 import Logo from "../components/Logo";
 import ErrorMessage from "../components/ErrorMessage";
 
-const LoginView = ({refetch}) => {
-  const navigate = useNavigate()
-  const initialValues = {
+interface LoginForm {
+  email: string;
+  password: string;
+}
+
+interface LoginViewProps {
+  refetch: () => void;
+}
+
+const LoginView = ({ refetch }: LoginViewProps) => {
+  const navigate = useNavigate();
+  const initialValues: LoginForm = {
     email: "",
     password: "",
   };
@@ -21,18 +30,17 @@ const LoginView = ({refetch}) => {
     formState: { errors },
   } = useForm({ defaultValues: initialValues });
 
-  const handleLogin = async (formData) => {
+  const handleLogin = async (formData: LoginForm) => {
     try {
       const { data } = await api.post("/auth/login", formData);
       localStorage.setItem("AUTH_TOKEN", data);
-      console.log(data)
+      console.log(data);
       toast.success("User authenticated");
-      refetch()
+      refetch();
       reset();
-       setTimeout(() => {
+      setTimeout(() => {
         navigate("/");
       }, 1000);
-     
     } catch (error) {
       if (isAxiosError(error) && error.response) {
         toast.error(error.response.data.error);
@@ -75,9 +83,9 @@ const LoginView = ({refetch}) => {
                   },
                 })}
               />
-               {errors.email && (
-            <ErrorMessage>{errors.email.message}</ErrorMessage>
-          )}
+              {errors.email && (
+                <ErrorMessage>{errors.email.message}</ErrorMessage>
+              )}
             </div>
             <div className="flex flex-col justify-stretch  gap-2">
               <label
@@ -95,10 +103,9 @@ const LoginView = ({refetch}) => {
                   required: "Password required",
                 })}
               />
-               {errors.password && (
-            <ErrorMessage>{errors.password.message}</ErrorMessage>
-          )}
-              
+              {errors.password && (
+                <ErrorMessage>{errors.password.message}</ErrorMessage>
+              )}
             </div>
 
             <button type="submit" className={`mt-4 btn btn-primary ${errors.email || errors.password ? 'btn-disabled' : ''}`}>

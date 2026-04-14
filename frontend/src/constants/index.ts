@@ -1,4 +1,4 @@
-export const THEMES = [
+export const THEMES: string[] = [
   "light",
   "dark",
   "cupcake",

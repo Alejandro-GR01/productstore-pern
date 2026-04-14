@@ -1,20 +1,21 @@
 import api from "../config/axios";
+import { ProductData } from "../types";
 
-//User API
+// User API
 export const getUser = async () => {
   console.log("Getting user data...");
   const { data } = await api.get("api/users/my");
-  console.log(data)
+  console.log(data);
   return data;
 };
 
-//Products API
+// Products API
 export const getAllProducts = async () => {
   const { data } = await api.get("/api/products");
   return data;
 };
 
-export const getProductById = async (id) => {
+export const getProductById = async (id: string) => {
   const { data } = await api.get(`/api/products/${id}`);
   return data;
 };
@@ -24,29 +25,40 @@ export const getMyProducts = async () => {
   return data;
 };
 
-export const createProduct = async (productData) => {
+export const createProduct = async (productData: ProductData) => {
   const { data } = await api.post("/api/products", productData);
   return data;
 };
 
-export const updateProduct = async ({ id, ...productData }) => {
+export const updateProduct = async ({
+  id,
+  ...productData
+}: {
+  id: string;
+  productData: ProductData;
+}) => {
   const { data } = await api.put(`/api/products/${id}`, productData);
   return data;
 };
 
-export const deleteProduct = async (id) => {
+export const deleteProduct = async (id: string) => {
   const { data } = await api.delete(`/api/products/${id}`);
   return data;
 };
 
-
 // Comments API
-export const createComment = async ({productId, content})=> {
-    const {data} = await api.post(`/api/comments/${productId}`, {content});
-    return data;
+export const createComment = async ({
+  productId,
+  content,
+}: {
+  productId: string;
+  content: string;
+}) => {
+  const { data } = await api.post(`/api/comments/${productId}`, { content });
+  return data;
 };
 
-export const deleteComment = async ({commentId})=> {
-    const {data} = await api.delete(`api/comments/${commentId}`);
-    return data;
-}
+export const deleteComment = async ({ commentId }: { commentId: string }) => {
+  const { data } = await api.delete(`api/comments/${commentId}`);
+  return data;
+};

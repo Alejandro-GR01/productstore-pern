@@ -6,15 +6,28 @@ import { isAxiosError } from "axios";
 import api from "../config/axios";
 import ErrorMessage from "../components/ErrorMessage";
 
-const RegisterView = ({refetch}) => {
+interface RegisterForm {
+  name: string;
+  email: string;
+  handle: string;
+  password: string;
+  password_confirmation: string;
+}
+
+interface RegisterViewProps {
+  refetch: () => void;
+}
+
+const RegisterView = ({ refetch }: RegisterViewProps) => {
   const navigate = useNavigate();
-  const initialvalues = {
+  const initialvalues: RegisterForm = {
     name: "",
     email: "",
     handle: "",
     password: "",
     password_confirmation: "",
   };
+
   const {
     register,
     watch,
@@ -25,7 +38,7 @@ const RegisterView = ({refetch}) => {
 
   const password = watch("password");
 
-  const handleRegister = async (formData) => {
+  const handleRegister = async (formData: RegisterForm) => {
     try {
       const { data } = await api.post(`/auth/register`, formData);
       localStorage.setItem("AUTH_TOKEN", data);
@@ -43,6 +56,7 @@ const RegisterView = ({refetch}) => {
       }
     }
   };
+
   return (
     <div className="px-4 flex items-center justify-center min-h-dvh w-dvw">
       <div className="mx-auto card bg-base-300 card-body card-border border-primary/30 w-full max-w-xl ">

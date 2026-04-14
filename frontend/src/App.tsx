@@ -14,12 +14,12 @@ import useUserSinc from "./hooks/useUserSinc";
 
 const App = () => {
   const { theme } = useAppStore();
-  const {refetch} = useUserSinc();
+  const { refetch } = useUserSinc();
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
-
 
   return (
     <>
