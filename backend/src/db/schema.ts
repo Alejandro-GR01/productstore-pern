@@ -70,5 +70,5 @@ export type NewUser = typeof users.$inferInsert
 export type Product = typeof products.$inferSelect
 export type NewProduct = typeof products.$inferInsert
 
-export type Coment = typeof comments.$inferSelect
-export type NewComent = typeof comments.$inferInsert
+export type Comment = typeof comments.$inferSelect
+export type NewComment = typeof comments.$inferInsert

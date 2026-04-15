@@ -4,7 +4,7 @@ import {
   users,
   comments,
   products,
-  type NewComent,
+  type NewComment,
   type NewProduct,
   type NewUser,
   type User,
@@ -125,7 +125,7 @@ export const deleteProduct = async (id: string) => {
 };
 
 //COMMENT QUERIES
-export const createComment = async (data: NewComent) => {
+export const createComment = async (data: NewComment) => {
   const [comment] = await db.insert(comments).values(data).returning();
   return comment;
 };
