@@ -10,10 +10,14 @@ type ProtectedRouteProps = {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const queryClinet = useQueryClient()
-    const {data} = useUserSinc()
+    const user: User = queryClinet.getQueryData(['user'])
+    const {isLoading, isError} = useUserSinc()
 
-    if(!data || data.name.length === 0){
+    if(!user || user.name.length === 0){
+      if(isError && !isLoading) {
         return <Navigate to='/auth/register' replace/>
+
+      }
      }
 
   return <>{children}</>;
