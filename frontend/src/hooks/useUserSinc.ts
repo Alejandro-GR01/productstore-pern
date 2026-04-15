@@ -8,7 +8,7 @@ import { User } from "../types";
 const useUserSinc = () => {
   const hasToken = typeof window !== "undefined" && !!localStorage.getItem("AUTH_TOKEN");
 
-  const { data, refetch, isLoading } = useQuery<User>({
+  const userSync = useQuery<User>({
     queryKey: ["user"],
     queryFn: getUser,
     enabled: hasToken, // Solo ejecuta si hay token
@@ -17,16 +17,13 @@ const useUserSinc = () => {
     refetchOnWindowFocus: false,
   });
 
-  useEffect(() => {
-    if (data) {
-      useAppStore.setState({ user: data });
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     useAppStore.setState({ user: data });
+  //   }
+  // }, [data]);
 
-  return {
-    refetch,
-    isLoading,
-  };
+  return userSync
 };
 
 export default useUserSinc;

@@ -10,12 +10,11 @@ import RegisterView from "./views/RegisterView";
 import { Toaster } from "sonner";
 import { useEffect } from "react";
 import { useAppStore } from "./store/store";
-import useUserSinc from "./hooks/useUserSinc";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const { theme } = useAppStore();
-  const { refetch } = useUserSinc();
+
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -53,10 +52,10 @@ const App = () => {
             }
           />
         </Route>
-        <Route path="/auth/login" element={<LoginView refetch={refetch} />} />
+        <Route path="/auth/login" element={<LoginView  />} />
         <Route
           path="/auth/register"
-          element={<RegisterView refetch={refetch} />}
+          element={<RegisterView  />}
         />
       </Routes>
       <Toaster position="top-right" />

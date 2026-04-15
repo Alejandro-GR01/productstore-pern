@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { isAxiosError } from "axios";
 import api from "../config/axios";
 import ErrorMessage from "../components/ErrorMessage";
+import useUserSinc from "../hooks/useUserSinc";
 
 interface RegisterForm {
   name: string;
@@ -14,12 +15,10 @@ interface RegisterForm {
   password_confirmation: string;
 }
 
-interface RegisterViewProps {
-  refetch: () => void;
-}
 
-const RegisterView = ({ refetch }: RegisterViewProps) => {
+const RegisterView = () => {
   const navigate = useNavigate();
+  const {refetch} = useUserSinc();
   const initialValues: RegisterForm = {
     name: "",
     email: "",

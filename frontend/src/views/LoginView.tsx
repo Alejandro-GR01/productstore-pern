@@ -6,18 +6,18 @@ import { toast } from "sonner";
 import { Link, useNavigate } from "react-router";
 import Logo from "../components/Logo";
 import ErrorMessage from "../components/ErrorMessage";
+import useUserSinc from "../hooks/useUserSinc";
 
 interface LoginForm {
   email: string;
   password: string;
 }
 
-interface LoginViewProps {
-  refetch: () => void;
-}
 
-const LoginView = ({ refetch }: LoginViewProps) => {
+
+const LoginView = () => {
   const navigate = useNavigate();
+  const {refetch} = useUserSinc()
   const initialValues: LoginForm = {
     email: "",
     password: "",
@@ -35,7 +35,7 @@ const LoginView = ({ refetch }: LoginViewProps) => {
       const { data } = await api.post("/auth/login", formData);
       localStorage.setItem("AUTH_TOKEN", data);
       toast.success("User authenticated");
-      refetch();
+
       reset();
       setTimeout(() => {
         navigate("/");

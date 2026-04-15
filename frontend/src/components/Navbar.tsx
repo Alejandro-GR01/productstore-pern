@@ -4,13 +4,14 @@ import ThemeSelector from "./ThemeSelector";
 import Logo from "./Logo";
 
 import { useAppStore } from "../store/store";
+import useUserSinc from "../hooks/useUserSinc";
 
 const Navbar = () => {
-  const { user } = useAppStore();
+  const { data: user, refetch } = useUserSinc();
 
   const handleLogout = () => {
     localStorage.removeItem("AUTH_TOKEN");
-    useAppStore.getState().reset();
+    refetch();
     window.location.href = "/";
   };
 
@@ -22,7 +23,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex gap-2 items-center ">
-          {user.name.length > 0 ? (
+          {user?.name.length > 0 ? (
             <>
               <Link to="/create" className="btn btn-primary btn-sm gap-1">
                 <PlusIcon className="size-4" />
