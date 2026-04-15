@@ -2,11 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { getUser } from "../api/api";
 import { useAppStore } from "../store/store";
+import { User } from "../types";
+
 
 const useUserSinc = () => {
   const hasToken = typeof window !== "undefined" && !!localStorage.getItem("AUTH_TOKEN");
 
-  const { data, refetch, isLoading } = useQuery({
+  const { data, refetch, isLoading } = useQuery<User>({
     queryKey: ["user"],
     queryFn: getUser,
     enabled: hasToken, // Solo ejecuta si hay token

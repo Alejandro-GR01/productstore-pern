@@ -58,6 +58,7 @@ const LoginView = ({ refetch }: LoginViewProps) => {
           </div>
           <h2 className="text-center text-primary/90 text-lg">Login</h2>
           <form
+          noValidate
             onSubmit={handleSubmit(handleLogin)}
             className=" flex flex-col gap-4 card-body"
           >

@@ -11,6 +11,7 @@ import { Toaster } from "sonner";
 import { useEffect } from "react";
 import { useAppStore } from "./store/store";
 import useUserSinc from "./hooks/useUserSinc";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const { theme } = useAppStore();
@@ -27,9 +28,30 @@ const App = () => {
         <Route path="/" element={<AppLayout />}>
           <Route index element={<HomeView />} />
           <Route path="/product/:id" element={<ProductView />} />
-          <Route path="/profile" element={<ProfileView />} />
-          <Route path="/create" element={<CreateProductView />} />
-          <Route path="/edit/:id" element={<EditProductView />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfileView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/create"
+            element={
+              <ProtectedRoute>
+                <CreateProductView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditProductView />{" "}
+              </ProtectedRoute>
+            }
+          />
         </Route>
         <Route path="/auth/login" element={<LoginView refetch={refetch} />} />
         <Route

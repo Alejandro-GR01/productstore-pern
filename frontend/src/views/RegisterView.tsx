@@ -20,7 +20,7 @@ interface RegisterViewProps {
 
 const RegisterView = ({ refetch }: RegisterViewProps) => {
   const navigate = useNavigate();
-  const initialvalues: RegisterForm = {
+  const initialValues: RegisterForm = {
     name: "",
     email: "",
     handle: "",
@@ -34,7 +34,7 @@ const RegisterView = ({ refetch }: RegisterViewProps) => {
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues: initialvalues });
+  } = useForm({ defaultValues: initialValues });
 
   const password = watch("password");
 
@@ -66,6 +66,7 @@ const RegisterView = ({ refetch }: RegisterViewProps) => {
           </div>
           <h2 className="text-center text-primary/90 text-lg">Register</h2>
           <form
+          noValidate
             onSubmit={handleSubmit(handleRegister)}
             className=" flex flex-col gap-4 card-body"
           >
