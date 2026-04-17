@@ -21,7 +21,7 @@ export async function getMyProducts(req: Request, res: Response) {
   try {
     const userId: User["id"] = req.user.id!;
     const products = await queries.getProductsByUserId(userId);
-   return  res.status(200).json(products);
+    return res.status(200).json(products);
   } catch (e) {
     console.log("Error getting user products", e);
     res.status(500).json({ error: "Failed to get user products" });
@@ -31,7 +31,7 @@ export async function getMyProducts(req: Request, res: Response) {
 // Get single product by ID (public)
 export async function getProductById(req: Request, res: Response) {
   try {
-    const id   = req.params.id! as string;
+    const id = req.params.id! as string;
 
     const product = await queries.getProductById(id);
 
@@ -50,8 +50,9 @@ export async function createProduct(req: Request, res: Response) {
   try {
     const userID: User["id"] = req.user.id!;
     console.log(userID);
-    const product: Pick<NewProduct, "title" | "description" | "imageUrl"> = req.body;
-    console.log(product)
+    const product: Pick<NewProduct, "title" | "description" | "imageUrl"> =
+      req.body;
+    console.log(product);
     const id = generateUUID();
 
     const productCreated = await queries.createProduct({
@@ -62,9 +63,7 @@ export async function createProduct(req: Request, res: Response) {
       id: id,
     });
 
-
-
-     return res.status(201).json(productCreated);
+    return res.status(201).json(productCreated);
   } catch (e) {
     console.log("Error creating product", e);
     const error = new Error("Failed to create product");
@@ -83,7 +82,9 @@ export async function updateProductById(req: Request, res: Response) {
     if (!exisitingProduct)
       return res.status(404).json({ error: "Product not found" });
     if (exisitingProduct.userID !== userID)
-      return res.status(403).json({ error: "You can only update your own products" });
+      return res
+        .status(403)
+        .json({ error: "You can only update your own products" });
 
     const product = await queries.updateProduct(id, {
       title,
@@ -108,7 +109,9 @@ export async function deleteProductById(req: Request, res: Response) {
     if (!exisitingProduct)
       return res.status(404).json({ error: "Product not found" });
     if (exisitingProduct.userID !== userID)
-      return res.status(403).json({ error: "You can only update your own products" });
+      return res
+        .status(403)
+        .json({ error: "You can only update your own products" });
 
     await queries.deleteProduct(id);
     return res.status(200).json({ message: "Product deleted succesfully" });

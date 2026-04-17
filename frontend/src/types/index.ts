@@ -1,8 +1,4 @@
-export interface ProductData {
-  title: string;
-  description: string;
-  imageUrl: string;
-}
+export type  ProductData = Pick<Product, "title" | "description" | "imageUrl">;
 
 export interface User {
   id: string;
@@ -35,4 +31,8 @@ export interface Comment {
   userID: string;
   productID: string;
   user?: User 
+}
+
+export interface Message {
+  message: string
 }

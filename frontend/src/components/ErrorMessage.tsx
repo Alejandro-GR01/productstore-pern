@@ -1,7 +1,12 @@
 import type { ReactNode } from "react";
 
-const ErrorMessage = ({ children }: { children: ReactNode }) => {
-  return <p className="text-primary text-xs ">{children} *</p>;
+type ErrorMessageProps = {
+  children: ReactNode,
+  className?: string
+}
+
+const ErrorMessage = ({ children , className}: ErrorMessageProps) => {
+  return <p className={`text-primary text-xs ${className}`}>{children} *</p>;
 };
 
 export default ErrorMessage;

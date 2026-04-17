@@ -9,11 +9,16 @@ import {
   TypeIcon,
 } from "lucide-react";
 import { isValidURL } from "../utils";
+import type { Product, ProductData } from "../types";
+import { toast } from "sonner";
+import ErrorMessage from "../components/ErrorMessage";
+import { useEffect } from "react";
+import ProductImage from "../components/ProductImage";
 
 const CreateProductView = () => {
   const navigate = useNavigate();
   const createProduct = useCreateProduct();
-  const initialValues = {
+  const initialValues: ProductData = {
     title: "",
     description: "",
     imageUrl: "",
@@ -25,17 +30,29 @@ const CreateProductView = () => {
     reset,
     formState: { errors },
     getValues,
+    watch
   } = useForm({ defaultValues: initialValues });
 
-  // console.log(formState)
+  const imageUrl = watch('imageUrl')
 
-  const handleCreateProduct = (e) => {
-    console.log(e);
+  const handleCreateProduct = async (e: ProductData) => {
+    createProduct.mutate(e, {
+      onSuccess: () => {
+        toast.success("Product created succesfully.");
+        reset();
+        navigate("/");
+      },
+      onError: () => {
+        toast.error("Failed to create product. Try again.");
+      },
+    });
   };
+
+
 
   return (
     <div className="max-w-lg mx-auto  ">
-      <Link to="/" className="btn btn-ghost btn-sm gap-1 mb-4">
+      <Link to="/" className="btn  btn-sm gap-1 mb-4">
         <ArrowLeftIcon className=" size-4" /> Back
       </Link>
 
@@ -48,7 +65,7 @@ const CreateProductView = () => {
           <form
             noValidate
             onSubmit={handleSubmit(handleCreateProduct)}
-            className="space-y-4 mt-4  "
+            className="mt-4 flex flex-col items-center gap-6 "
           >
             <label
               htmlFor="title"
@@ -66,6 +83,11 @@ const CreateProductView = () => {
                 })}
               />
             </label>
+            {errors.title && (
+              <ErrorMessage className="-mt-4 ml-4">
+                {errors.title.message}
+              </ErrorMessage>
+            )}
             <label
               htmlFor="imageUrl"
               className=" w-full input  input-ghost border border-primary/20 outline-primary/50  flex items-center gap-2 bg-base-200"
@@ -83,17 +105,24 @@ const CreateProductView = () => {
                 })}
               />
             </label>
-            {isValidURL(getValues().imageUrl) && getValues().imageUrl && (
-              <img
-                src={getValues().imageUrl}
+            {errors.imageUrl && (
+              <ErrorMessage className="-mt-4 ml-4">
+                {errors.imageUrl.message}
+              </ErrorMessage>
+            )}
+           
+
+              {imageUrl && isValidURL(imageUrl)&&(
+              <ProductImage
+                source={imageUrl}
+                className="max-h-40 aspect-video object-contain rounded-box"
                 alt="Preview"
-                className="w-full h-40 object-cover"
-                onError={(e) => (e.target.style.display = "none")}
+                placeholderImg="/image-broken.png"
               />
             )}
 
-            <div className="form-control  ">
-              <div className="flex items-start gap-2 p-3 rounded-box bg-base-200 border border-base-300">
+            <div className="form-control w-full  ">
+              <div className="flex items-start gap-2 p-3 rounded-box bg-base-200 border border-primary/20 focus-within:outline-2 outline-offset-2 outline-primary/50 ">
                 <FileTextIcon className="size-4 text-base-content/50 mt-1" />
                 <textarea
                   name="description"
@@ -108,6 +137,23 @@ const CreateProductView = () => {
                 />
               </div>
             </div>
+            {errors.description && (
+              <ErrorMessage className="-mt-4 ml-4">
+                {errors.description.message}
+              </ErrorMessage>
+            )}
+
+            <button
+              type="submit"
+              className="btn btn-primary w-full"
+              disabled={createProduct.isPending}
+            >
+              {createProduct.isPending ? (
+                <span className="loading loading-spinner" />
+              ) : (
+                "Create Product"
+              )}
+            </button>
           </form>
         </div>
       </div>
