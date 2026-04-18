@@ -4,9 +4,9 @@ import { getUser } from "../api/api";
 import { useAppStore } from "../store/store";
 import { User } from "../types";
 
-
 const useUserSinc = () => {
-  const hasToken = typeof window !== "undefined" && !!localStorage.getItem("AUTH_TOKEN");
+  const hasToken =
+    typeof window !== "undefined" && !!localStorage.getItem("AUTH_TOKEN");
 
   const userSync = useQuery<User>({
     queryKey: ["user"],
@@ -17,13 +17,7 @@ const useUserSinc = () => {
     refetchOnWindowFocus: false,
   });
 
-  // useEffect(() => {
-  //   if (data) {
-  //     useAppStore.setState({ user: data });
-  //   }
-  // }, [data]);
-
-  return userSync
+  return userSync;
 };
 
 export default useUserSinc;

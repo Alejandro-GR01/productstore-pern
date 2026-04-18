@@ -3,9 +3,10 @@ import {
   createProduct,
   deleteProduct,
   getAllProducts,
+  getMyProducts,
   getProductById,
 } from "../api/api";
-import { Product } from "../../../backend/src/db/schema";
+import { Product, User } from "../../../backend/src/db/schema";
 
 export const useProducts = () => {
   const result = useQuery<Product[]>({
@@ -15,6 +16,16 @@ export const useProducts = () => {
   });
   return result;
 };
+
+export const useMyProducts = ()=> {
+  const result = useQuery<Product[]>({
+    queryKey: ['products', 'my_products' ],
+    queryFn: getMyProducts,
+    refetchOnWindowFocus: false
+  })
+
+  return result
+}
 
 export const useCreateProduct = () => {
   const result = useMutation({

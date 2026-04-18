@@ -76,7 +76,7 @@ const CommentsSection = ({
       );
     }
   };
-  console.log("hola");
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">

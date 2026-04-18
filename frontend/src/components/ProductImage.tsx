@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import PlaceholderImg from "/image-broken.png";
 
 type ProductImageProps = {
   source: string;
@@ -10,7 +11,7 @@ type ProductImageProps = {
 
 const ProductImage = ({
   source,
-  placeholderImg = '/image-broken.png',
+  placeholderImg = PlaceholderImg,
   alt,
   disabledWithError = false,
   className = "",
@@ -27,11 +28,8 @@ const ProductImage = ({
   }, [source]);
 
   const handleError = () => {
+    if (hasError) return; // Evitar loops infinitos si el placeholder también falla
     setHasError(true);
-  };
-
-  const handleLoad = () => {
-    setHasError(false);
   };
 
   const shouldHide = disabledWithError && hasError;
@@ -43,7 +41,6 @@ const ProductImage = ({
       src={displaySrc}
       alt={alt}
       onError={handleError}
-      onLoadedData={handleLoad}
       style={{
         ...(shouldHide && { display: "none" }),
       }}

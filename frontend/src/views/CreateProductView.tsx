@@ -30,25 +30,24 @@ const CreateProductView = () => {
     reset,
     formState: { errors },
     getValues,
-    watch
+    watch,
   } = useForm({ defaultValues: initialValues });
 
-  const imageUrl = watch('imageUrl')
+  const imageUrl = watch("imageUrl");
 
   const handleCreateProduct = async (e: ProductData) => {
     createProduct.mutate(e, {
       onSuccess: () => {
         toast.success("Product created succesfully.");
         reset();
-        navigate("/");
+
+        navigate("/profile");
       },
       onError: () => {
         toast.error("Failed to create product. Try again.");
       },
     });
   };
-
-
 
   return (
     <div className="max-w-lg mx-auto  ">
@@ -110,9 +109,8 @@ const CreateProductView = () => {
                 {errors.imageUrl.message}
               </ErrorMessage>
             )}
-           
 
-              {imageUrl && isValidURL(imageUrl)&&(
+            {imageUrl && isValidURL(imageUrl) && (
               <ProductImage
                 source={imageUrl}
                 className="max-h-40 aspect-video object-contain rounded-box"

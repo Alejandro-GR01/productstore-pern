@@ -3,7 +3,7 @@ import { useDeleteProduct, useProduct } from "../hooks/useProducts";
 
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useQueryClient } from "@tanstack/react-query";
-import { Product, User } from "../types";
+import { User } from "../types";
 import {
   ArrowLeftIcon,
   CalendarIcon,
@@ -12,8 +12,9 @@ import {
   UserIcon,
 } from "lucide-react";
 import { toast } from "sonner";
-import ProductImage from "../components/ProductImage";
 import CommentsSection from "../components/CommentsSection";
+import React from "react";
+import placeholdeImg from "/image-broken.png";
 
 const ProductView = () => {
   const queryClient = useQueryClient();
@@ -92,10 +93,13 @@ const ProductView = () => {
         {/* Image */}
         <div className="card bg-base-300">
           <figure className="p-4">
-            <ProductImage
-              source={product.imageUrl}
+            <img
+              src={product.imageUrl}
               alt={product.title}
-              className="rounded-xl w-auto h-80 object-contain"
+              className="rounded-xl w-auto object-cover object-center h-80 "
+              onError={(e: React.SyntheticEvent<HTMLImageElement>) =>
+                (e.target.src = placeholdeImg)
+              }
             />
           </figure>
         </div>
@@ -150,12 +154,11 @@ const ProductView = () => {
         </div>
       </div>
 
-
       {/* Comments */}
       <div className="card bg-base-300">
-            <div className="card-body">
-            <CommentsSection productId={id} comments={product.comments} />
-            </div>
+        <div className="card-body">
+          <CommentsSection productId={id} comments={product.comments} />
+        </div>
       </div>
     </div>
   );
