@@ -24,7 +24,7 @@ const HomeView = () => {
             <img
               src="/image.png"
               alt="Creator"
-              className="relative h-64 lg:h-72 px-4 rounded-2xl shadow-2xl"
+              className="relative h-64 lg:h-72 px-4 rounded-2xl shadow-2xl "
             />
           </div>
           <div className="text-center lg:text-left">

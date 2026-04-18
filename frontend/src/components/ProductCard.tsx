@@ -23,7 +23,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             alt={product.title}
             className="absolute z-10 top-0 bottom-0 left-0 right-0   h-40 w-full object-cover transition-opacity duration-300"
             onError={(e) => {
-              e.target.classList.add("hidden");
+              (e.target as HTMLImageElement).classList.add("hidden");
             }}
           />
           <ImageOff className="relative z-0 top-0 bottom-0 left-0 right-0 size-20 text-primary bg-transparent"  />

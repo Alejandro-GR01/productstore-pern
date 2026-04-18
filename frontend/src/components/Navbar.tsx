@@ -33,6 +33,7 @@ const Navbar = () => {
                 <UserIcon className="size-4" />
                 <span className="hidden sm:inline">Profile</span>
               </Link>
+           
               <button
                 onClick={handleLogout}
                 className="btn btn-ghost btn-sm gap-1"

@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useState, useEffect, useRef } from "react";
+
 type ProductImageProps = {
   source: string;
   placeholderImg?: string;
@@ -9,32 +10,43 @@ type ProductImageProps = {
 
 const ProductImage = ({
   source,
-  placeholderImg,
+  placeholderImg = '/image-broken.png',
   alt,
   disabledWithError = false,
   className = "",
 }: ProductImageProps) => {
-  const src = useMemo(() => source, [source]);
-  const picture = document.querySelector('#product-image')
+  const [hasError, setHasError] = useState(false);
+  const prevSourceRef = useRef(source);
 
-
-
-  const handelError = (e) => {
-    if (!disabledWithError) {
-      e.target.src = placeholderImg;
-    
-    
-    } else {
-      e.target.style.display = "none";
+  // Reset error state solo cuando source cambia a un valor diferente
+  useEffect(() => {
+    if (source !== prevSourceRef.current) {
+      prevSourceRef.current = source;
+      setHasError(false);
     }
+  }, [source]);
+
+  const handleError = () => {
+    setHasError(true);
   };
+
+  const handleLoad = () => {
+    setHasError(false);
+  };
+
+  const shouldHide = disabledWithError && hasError;
+  const displaySrc = !source || hasError ? placeholderImg : source;
+
   return (
     <img
-    id="product-image"
       className={className}
-      src={src || placeholderImg}
+      src={displaySrc}
       alt={alt}
-      onError={handelError}
+      onError={handleError}
+      onLoadedData={handleLoad}
+      style={{
+        ...(shouldHide && { display: "none" }),
+      }}
     />
   );
 };

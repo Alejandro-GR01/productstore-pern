@@ -5,7 +5,6 @@ export interface User {
   imageUrl: string;
   email: string;
   name: string;
-  passwordHash: string;
   role: string;
   isActive: boolean;
   createdAt: Date;

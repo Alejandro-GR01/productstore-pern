@@ -9,6 +9,7 @@ import {
   type NewUser,
   type User,
 } from "./schema.ts";
+import { hashPassword } from "../utils/auth.ts";
 
 type UserOut = Omit<User, "passwordHash">;
 
@@ -22,7 +23,7 @@ export const createUser = async (data: NewUser) => {
 
 export const getUserById = async (id: string) => {
   const [user] = await db.select().from(users).limit(1).where(eq(users.id, id));
-    
+
   return user;
 };
 
@@ -40,7 +41,7 @@ export const updateUser = async (id: string, data: Partial<NewUser>) => {
     throw new Error(`User whit id ${id} not found`);
   }
 
-  const [user] = await db
+  const [{ passwordHash, ...user }] = await db
     .update(users)
     .set(data)
     .where(eq(users.id, id))
@@ -49,7 +50,7 @@ export const updateUser = async (id: string, data: Partial<NewUser>) => {
 };
 
 export const upsertUser = async (data: NewUser) => {
-  const [user] = await db
+  const [{ passwordHash, ...user }] = await db
     .insert(users)
     .values(data)
     .onConflictDoUpdate({
@@ -69,7 +70,13 @@ export const createProduct = async (data: NewProduct) => {
 
 export const getAllProducts = async () => {
   return db.query.products.findMany({
-    with: { user: true },
+    with: {
+      user: {
+        columns: {
+          passwordHash: false,
+        },
+      },
+    },
     orderBy: (products, { desc }) => [desc(products.createdAt)],
     //desc hace que veas el ultimo poducto creado primero
     // los corchetes son requeridos ya que orderBy espear un arreglo aunque sea de una sola columna
@@ -80,9 +87,19 @@ export const getProductById = async (id: string) => {
   return db.query.products.findFirst({
     where: eq(products.id, id),
     with: {
-      user: true,
+      user: {
+        columns: {
+          passwordHash: false,
+        },
+      },
       comments: {
-        with: { user: true },
+        with: {
+          user: {
+            columns: {
+              passwordHash: false,
+            },
+          },
+        },
         orderBy: (comments, { desc }) => [desc(comments.createdAt)],
       },
     },
@@ -93,7 +110,11 @@ export const getProductsByUserId = async (userId: string) => {
   return db.query.products.findMany({
     where: eq(products.userID, userId),
     with: {
-      user: true,
+      user: {
+        columns: {
+          passwordHash: false,
+        },
+      },
     },
     orderBy: (products, { desc }) => [desc(products.createdAt)],
   });
@@ -133,7 +154,13 @@ export const createComment = async (data: NewComment) => {
 export const getCommentById = async (id: string) => {
   return db.query.comments.findFirst({
     where: eq(comments.id, id),
-    with: { user: true },
+    with: {
+      user: {
+        columns: {
+          passwordHash: false,
+        },
+      },
+    },
   });
 };
 

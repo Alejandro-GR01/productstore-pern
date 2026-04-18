@@ -26,7 +26,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<HomeView />} />
-          <Route path="/product/:id" element={<ProductView />} />
+          <Route path="/products/:id" element={<ProductView />} />
           <Route
             path="/profile"
             element={
