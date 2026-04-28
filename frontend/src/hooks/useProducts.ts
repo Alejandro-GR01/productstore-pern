@@ -5,6 +5,7 @@ import {
   getAllProducts,
   getMyProducts,
   getProductById,
+  updateProduct,
 } from "../api/api";
 import { Product, User } from "../../../backend/src/db/schema";
 
@@ -12,20 +13,20 @@ export const useProducts = () => {
   const result = useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: getAllProducts,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   });
   return result;
 };
 
-export const useMyProducts = ()=> {
+export const useMyProducts = () => {
   const result = useQuery<Product[]>({
-    queryKey: ['products', 'my_products' ],
+    queryKey: ["products", "my_products"],
     queryFn: getMyProducts,
-    refetchOnWindowFocus: false
-  })
+    refetchOnWindowFocus: false,
+  });
 
-  return result
-}
+  return result;
+};
 
 export const useCreateProduct = () => {
   const result = useMutation({
@@ -39,7 +40,7 @@ export const useProduct = (id: Product["id"]) => {
     queryKey: ["product", id],
     queryFn: () => getProductById(id),
     enabled: !!id,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   });
 
   return result;
@@ -48,6 +49,14 @@ export const useProduct = (id: Product["id"]) => {
 export const useDeleteProduct = () => {
   const result = useMutation({
     mutationFn: deleteProduct,
+  });
+  return result;
+};
+
+export const useUpdateProduct = () => {
+  const result = useMutation({
+    mutationFn: updateProduct,
+    
   });
   return result;
 };

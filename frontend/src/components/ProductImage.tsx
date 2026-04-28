@@ -37,7 +37,7 @@ const ProductImage = ({
 
   return (
     <img
-      className={className}
+      className={`w-full h-auto min-h-32 object-cover object-center  ${className}`}
       src={displaySrc}
       alt={alt}
       onError={handleError}

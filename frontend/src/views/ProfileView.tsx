@@ -13,6 +13,8 @@ import {
 
 import placeholdeImg from "/image-broken.png";
 import { toast } from "sonner";
+import ProductCard from "../components/ProductCard";
+import ProductImage from "../components/ProductImage";
 
 function ProfileView() {
   const queryClient = useQueryClient();
@@ -82,15 +84,7 @@ function ProfileView() {
           {products.map((product) => (
             <div key={product.id} className="card card-side bg-base-300">
               <figure className="w-32 shrink-0">
-                <img
-                  src={product.imageUrl}
-                  alt={product.title}
-                  className="h-full  object-cover"
-                  onError={(e) => {
-                    e.target.src = placeholdeImg;
-                    e.target.style.objectFit = "contain";
-                  }}
-                />
+                <ProductImage source={product.imageUrl} alt={product.title} className="w-fullobject-cover object-center max-h-[40dvh] h-full"  />
               </figure>
               <div className="card-body p-4">
                 <h2 className="card-title text-base">{product.title}</h2>

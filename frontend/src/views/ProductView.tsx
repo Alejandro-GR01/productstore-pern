@@ -13,8 +13,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import CommentsSection from "../components/CommentsSection";
-import React from "react";
-import placeholdeImg from "/image-broken.png";
+
+import ProductImage from "../components/ProductImage";
 
 const ProductView = () => {
   const queryClient = useQueryClient();
@@ -60,10 +60,10 @@ const ProductView = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between mb-4 ">
-        <Link to="/" className="btn  btn-sm gap-1 ">
+        <button onClick={()=> navigate(-1)} className="btn  btn-sm gap-1 ">
           <ArrowLeftIcon className=" size-4" />
           <span className="hidden sm:block">Back</span>
-        </Link>
+        </button>
         {isOwner && (
           <div className="flex gap-2">
             <Link
@@ -93,14 +93,8 @@ const ProductView = () => {
         {/* Image */}
         <div className="card bg-base-300">
           <figure className="p-4">
-            <img
-              src={product.imageUrl}
-              alt={product.title}
-              className="rounded-xl w-auto object-cover object-center h-80 "
-              onError={(e: React.SyntheticEvent<HTMLImageElement>) =>
-                (e.target.src = placeholdeImg)
-              }
-            />
+            <ProductImage source={product.imageUrl} alt={product.title} className="rounded-xl w-auto object-cover object-center max-h-[40dvh] h-full" />
+           
           </figure>
         </div>
 

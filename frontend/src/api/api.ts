@@ -31,7 +31,7 @@ export const createProduct = async (productData: ProductData) => {
 
 export const updateProduct = async ({
   id,
-  ...productData
+  productData
 }: {
   id: string;
   productData: ProductData;

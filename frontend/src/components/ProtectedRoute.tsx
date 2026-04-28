@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const user: User = queryClinet.getQueryData(["user"]);
 
   if (!isLoading) {
-    if (isError || !user || user.name.length === 0) {
+    if (isError || !user ) {
       return <Navigate to="/auth/login" replace />;
     }
   }
