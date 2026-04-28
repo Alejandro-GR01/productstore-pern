@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate, useParams } from "react-router";
+import { Link,  useNavigate, useParams } from "react-router";
 import { useProduct, useUpdateProduct } from "../hooks/useProducts";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useQueryClient } from "@tanstack/react-query";
