@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { Product, User } from "../../../backend/src/db/schema";
+import { Product, User } from "../types";
 import { useDeleteProduct, useMyProducts } from "../hooks/useProducts";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { Link, useNavigate } from "react-router";

@@ -7,7 +7,7 @@ import {
   getProductById,
   updateProduct,
 } from "../api/api";
-import { Product, User } from "../../../backend/src/db/schema";
+import { Product, User } from "../types";
 
 export const useProducts = () => {
   const result = useQuery<Product[]>({
