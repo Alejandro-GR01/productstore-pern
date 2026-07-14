@@ -1,7 +1,14 @@
 node_modules
 dist
 
+# Env files - never commit real values
 .env
+.env.local
+.env.prod
+.env.development
+.env.production
 
+# Allow example template
+!.env.expamles
 
 .DS_Store

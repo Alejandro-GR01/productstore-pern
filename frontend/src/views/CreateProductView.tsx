@@ -32,9 +32,8 @@ const CreateProductView = () => {
     formState: { errors },
     getValues,
     watch,
+    setValue,
   } = useForm({ defaultValues: initialValues });
-
-  
 
   const handleCreateProduct = async (e: ProductData) => {
     createProduct.mutate(e, {
@@ -62,7 +61,14 @@ const CreateProductView = () => {
             <SparklesIcon className="size-5 text-primary text-md" /> New Product
           </h1>
 
-         <EditProductForm watch={watch} register={register} onSubmit={handleSubmit(handleCreateProduct)} isPending={createProduct.isPending} errors={errors} isCreateForm={true} />
+          <EditProductForm
+            watch={watch}
+            register={register}
+            onSubmit={handleSubmit(handleCreateProduct)}
+            isPending={createProduct.isPending}
+            errors={errors}
+            isCreateForm={true}
+          />
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@
     "dev": "nodemon  src/index.ts",
     "dev:api": "nodemon src/index.ts --api",
     "build": "tsc",
+    "start": "node --import tsx src/index.ts",
     "db:push": "drizzle-kit push"
   },
   "keywords": [],
@@ -24,6 +25,7 @@
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.20.0",
     "slug": "^11.0.1",
+    "tsx": "^4.23.1",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
